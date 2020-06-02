@@ -19,22 +19,25 @@ namespace dgv_radio_checkbox
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            // Create the binding list
-            BindingList<QuestionaireItem> testdata = new BindingList<QuestionaireItem>();
-            // And add 5 example items to it
-            for (int i = 0; i < 5; i++) testdata.Add(new QuestionaireItem());
-            // Now make this list the DataSource of the DGV.
-            dataGridView1.DataSource = testdata;
+            if (!DesignMode)    // We only want this behavior at runtime
+            {
+                // Create the binding list
+                BindingList<QuestionaireItem> testdata = new BindingList<QuestionaireItem>();
+                // And add 5 example items to it
+                for (int i = 0; i < 5; i++) testdata.Add(new QuestionaireItem());
+                // Now make this list the DataSource of the DGV.
+                dataGridView1.DataSource = testdata;
 
-            // This just formats the column widths a little bit
-            dataGridView1.Columns["Question"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridView1.Columns["Maybe"].Width =
-            dataGridView1.Columns["Yes"].Width =
-            dataGridView1.Columns["No"].Width = 40;
+                // This just formats the column widths a little bit
+                dataGridView1.Columns["Question"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns["Maybe"].Width =
+                dataGridView1.Columns["Yes"].Width =
+                dataGridView1.Columns["No"].Width = 40;
 
-            // And this subscribes to the event (one of them anyway...)
-            // that will fire when the checkbox is changed
-            dataGridView1.CurrentCellDirtyStateChanged += DataGridView1_CurrentCellDirtyStateChanged;
+                // And this subscribes to the event (one of them anyway...)
+                // that will fire when the checkbox is changed
+                dataGridView1.CurrentCellDirtyStateChanged += DataGridView1_CurrentCellDirtyStateChanged;
+            }
         }
 
         private void DataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -62,7 +65,7 @@ namespace dgv_radio_checkbox
                     item.No = false;
                     break;
             }
-            dataGridView1.Refresh();    // Update the binding list to the displey
+            dataGridView1.Refresh();    // Update the binding list to the display
         }
     }
     class QuestionaireItem
